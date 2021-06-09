@@ -11,10 +11,13 @@ let arr1 = Array.from(modalClose);
 
 for (let i = 0; i < arr1.length; i++) {
     arr1[i].onclick = function() {
+        console.log(this)
         this.closest(".modal").classList.remove("modal_active")
+
     }
 }
 
 clickBtn1.onclick = function() {
-    modalTwoId.classList.add("modal_active")
+    this.closest(".modal").classList.remove("modal_active");
+    modalTwoId.classList.add("modal_active");
 }
