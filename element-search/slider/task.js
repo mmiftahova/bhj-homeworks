@@ -1,74 +1,50 @@
-let sliderCheked = document.querySelectorAll(".slider__arrow");
-let sliderList = document.querySelectorAll(".slider__item");
+let sliderArrow = document.querySelectorAll(".slider__arrow");
+let sliderItem = document.querySelectorAll(".slider__item");
 let sliderDot = document.querySelectorAll(".slider__dot");
 
+let sliderItemChecked = Array.from(sliderItem);
+let sliderDotChecked = Array.from(sliderDot);
+let switchList = Array.from(sliderArrow);
 
-let arr1 = Array.from(sliderCheked);
-let arr2 = Array.from(sliderList);
-let arr3 = Array.from(sliderDot);
+let counter = Number(document.querySelector(".slider__item_active").textContent);
 
-for (let i = 0; i < arr1.length; i++) {
+const sliderActive = function (x) {
+    sliderItemChecked[x].classList.add("slider__item_active");
+    sliderDotChecked[x].classList.add("slider__dot_active");
+}
 
-    arr1[i].onclick = function() {
+const sliderRemove = function (x) {
+    sliderItemChecked[x].classList.remove("slider__item_active")
+    sliderDotChecked[x].classList.remove("slider__dot_active");
+}
+
+
+const sliderChecked = function (a) {
+    sliderRemove(counter);
+    sliderActive(a);
+    counter = a;
+    console.log(a)
+}
+
+for (let i = 0; i < sliderDotChecked.length; i++) {
+    sliderDotChecked[i].onclick = function () {
+        sliderChecked(i);
+    }
+}
+for (let j = 0; j < switchList.length; j++) {
+    switchList[j].onclick = function () {
         if (this.classList.contains("slider__arrow_next")) {
-            itemActive();
+            if (counter + 1 >= sliderItemChecked.length) {
+                sliderChecked(0)
+            } else {
+                sliderChecked(counter + 1)
+            }
         } else {
-            itemActiveLeft();
-        }
-
-    }
-}
-
-const itemActive = function() {
-    for (let j = 0; j < arr2.length; j++) {
-
-        if (arr2[j].classList.contains("slider__item_active")) {
-            arr2[j].classList.remove("slider__item_active")
-            arr3[j].classList.remove("slider__dot_active");
-            if (j + 1 < arr2.length) {
-                arr2[j + 1].classList.add("slider__item_active");
-                arr3[j + 1].classList.add("slider__dot_active");
-            } else {
-                arr2[0].classList.add("slider__item_active");
-                arr3[0].classList.add("slider__dot_active");
+             if (counter <= 0) {
+                sliderChecked(sliderItemChecked.length - 1)
+            } else{
+                sliderChecked(counter - 1)
             }
-            return
         }
-
-    }
-
-}
-
-
-const itemActiveLeft = function() {
-    for (let j = arr2.length - 1; j >= 0; j--) {
-        if (arr2[j].classList.contains("slider__item_active")) {
-            arr2[j].classList.remove("slider__item_active");
-            arr3[j].classList.remove("slider__dot_active");
-            if (j - 1 >= 0) {
-                arr2[j - 1].classList.add("slider__item_active");
-                arr3[j - 1].classList.add("slider__dot_active");
-            } else {
-                arr2[arr2.length - 1].classList.add("slider__item_active");
-                arr3[arr2.length - 1].classList.add("slider__dot_active");
-            }
-            return
-        }
-    }
-}
-
-
-for (let i = 0; i < arr3.length; i++) {
-    arr3[i].onclick = function() {
-        for (let j = 0; j < arr3.length; j++) {
-            console.log(i)
-            if (arr3[j].classList.contains("slider__dot_active")) {
-                arr3[j].classList.remove("slider__dot_active");
-                arr2[j].classList.remove("slider__item_active")
-            }
-
-        }
-        this.classList.add("slider__dot_active")
-        arr2[i].classList.add("slider__item_active")
     }
 }
