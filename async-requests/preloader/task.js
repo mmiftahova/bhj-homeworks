@@ -10,8 +10,9 @@ xhr.addEventListener("readystatechange", function () {
     if (this.readyState == xhr.DONE && this.status == 200) {
         let data = JSON.parse(this.responseText);
         for (key in data.response.Valute) {
-        items.insertAdjacentHTML("afterend", 
-        `<div class="item__code">
+        items.insertAdjacentHTML("afterbegin", 
+        `<div class="item">
+        <div class="item__code">
         ${data.response.Valute[key].CharCode}
         </div>
         <div class="item__value">
@@ -19,6 +20,7 @@ xhr.addEventListener("readystatechange", function () {
         </div>
         <div class="item__currency">
         руб.
+        </div>
         </div>`)
         
         document.querySelector(".loader").classList.remove("loader_active")
